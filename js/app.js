@@ -1,5 +1,6 @@
 var app = angular.module("memoriesApp", ['ngRoute'])
   app.controller('HomeController', function($scope, $http){
+     
       $scope.newMemory = function(){
 
         $scope.newObj = {old_days: $scope.memories.then,
@@ -9,14 +10,14 @@ var app = angular.module("memoriesApp", ['ngRoute'])
           console.log($scope.newObj)
         
         $http.post('http://g12-paul-siskind-memories.cfapps.io/api/v1/memories',{memories:$scope.newObj}).then(function(data){
-        console.log(data.data);
-      })
+          console.log(data.data);
+        })
       }
 
     
-      $http.get('http://g12-paul-siskind-memories.cfapps.io/api/v1/memories').then(function(data){
-        $scope.displays = data.data
-        console.log(data.data)
+      $http.get('http://g12-paul-siskind-memories.cfapps.io/api/v1/memories').then(function(response){
+        $scope.displays = response.data.attributes
+        console.log(response.data)
       })
     
   })
