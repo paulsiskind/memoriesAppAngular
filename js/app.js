@@ -1,38 +1,45 @@
-var app = angular.module("memoriesApp", ['ngRoute'])
-  app.controller('HomeController', function($scope, $http){
+angular.module("memoriesApp", ['ngRoute']).
+
+  controller('HomeController', function($scope, $http) {
      
-      $scope.newMemory = function(){
-
-        $scope.newObj = {old_days: $scope.memories.then,
-                         these_days: $scope.memories.now,
-                         year: $scope.memories.year}
-                         $scope.memories = '';
-          console.log($scope.newObj)
-        
-        $http.post('http://g12-paul-siskind-memories.cfapps.io/api/v1/memories',{memories:$scope.newObj}).then(function(data){
-          console.log(data.data);
-        })
-      }
-
-    
-      $http.get('http://g12-paul-siskind-memories.cfapps.io/api/v1/memories').then(function(response){
-        $scope.displays = response.data.attributes
-        console.log(response.data)
+    $scope.newMemory = function(){
+      var newObj = {
+                    "data": {
+                      "type": "memory",
+                      "attributes": {
+                        "old_days": $scope.memories.then,
+                        "these_days": $scope.memories.now,
+                        "year": $scope.memories.year
+                        }
+                      }
+                    }
+      
+      $http.post('http://g12-paul-siskind-memories.cfapps.io/api/v1/memories', newObj).then(function(response){
+        var id = response.data.rows[0].id
+        var newMemoryObj = {
+          id: id,
+          old_days: $scope.memories.then,
+          these_days: $scope.memories.now,
+          year: $scope.memories.year
+        }
+        $scope.memories[$scope.memories.length] = newMemoryObj;
       })
-    
-  })
-  app.controller('YearController', function($scope, $http){
+    }
 
-  })
-  app.config(function($routeProvider){
+  
+    $http.get('http://g12-paul-siskind-memories.cfapps.io/api/v1/memories').then(function(response){
+      $scope.memories = response.data
+    })
+    
+  }).
+
+  config(function($routeProvider){
     $routeProvider
      .when('/', {
-      templateUrl: '../index.html',
-      controller: 'HomeController'
+        templateUrl: 'index.html',
+        controller: 'HomeController'
      })
-     .when('/years/:year',{
-      templateUrl: '../index.html',
-      controller: 'YearController'
-     })
-
   })
+
+
+  // http://g12-paul-siskind-memories.cfapps.io/api/v1/memories

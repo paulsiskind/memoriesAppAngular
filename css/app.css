@@ -1,3 +1,15 @@
 .well{
   background-color: red;
+  font-family: 'Amatic SC', cursive;
+  font-size: 60px;
+}
+body{
+  background: url('https://upload.wikimedia.org/wikipedia/commons/0/0c/PinkArgyle.svg');
+}
+h2{
+  font-family: 'Amatic SC', bold;
+  font-size: 50px;
+}
+button, td, textarea{
+  font-family: 'Special Elite', cursive;
 }

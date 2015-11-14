@@ -1,0 +1,8 @@
+applications:
+- name: g12-paul-siskind-memories-client
+  memory: 64M
+  buildpack: staticfile_buildpack
+
+
+
+  
